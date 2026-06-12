@@ -15,29 +15,6 @@ The platform follows a multi-stage data lake/warehouse pattern using MongoDB for
 2.  Transformation Layer: An idempotent pipeline that normalizes entities, resolves cross-source identities, and calculates analytical views (Player/Team Match Stats).
 3.  Unified Layer: A standardized schema in football_unified optimized for cross-provider analysis.
 4.  API Layer: A RESTful interface with pagination, recursive serialization, and comprehensive observability.
-
----
-
-## Project Structure
-```text
-football-data-platform/
-├── app/                  # FastAPI Application
-│   ├── api/              # Modular routes (Raw, Unified, Sources)
-│   ├── core/             # Config & MongoDB connection management
-│   ├── schemas/          # Pydantic models for validation
-│   └── utils/            # Serialization & Pagination helpers
-├── ingestion/            # Data Ingestion Pipelines
-│   ├── sources/          # Provider-specific adapters (JSON, Scraping, HTML)
-│   └── runners/          # CLI scripts for batch loading
-├── transform/            # Data Transformation Layer
-│   ├── mapping/          # Entity Resolution & Name Normalization logic
-│   ├── pipelines/        # Entity-specific transformers
-│   └── runners/          # CLI scripts for normalization & stats building
-├── script adds/              # Maintenance (Indexing, Quality Audits)
-├── tests/                # Core platform test suite
-└── docker-compose.yml    # Full-stack deployment configuration
-```
-
 ---
 
 ## Getting Started
@@ -112,12 +89,3 @@ Explore the platform through the Swagger UI at http://localhost:8000/docs.
   ]
 }
 ```
-
----
-
-## Technical Excellence
-- Entity Resolution: Uses Unicode normalization and fuzzy matching to deduplicate teams and players across all European top leagues.
-- Idempotency: All pipelines use UPSERT logic to ensure re-runs are safe and additive.
-- Observability: Every transformation is logged in transformation_runs with counts and status.
-- Data Quality: Includes a run_quality_checks.py suite to audit provenance and mapping integrity.
-- Serialization: Recursive handlers for BSON ObjectIds ensure JSON-standard API responses.
